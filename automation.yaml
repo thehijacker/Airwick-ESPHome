@@ -1,0 +1,46 @@
+input_boolean:
+  airwick_must_spray:
+    name: Airwick must spray
+    initial: off
+    icon: mdi:spray
+
+automation:
+  - alias: BATHROOM Long movement activate Airwick
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.athom_presence_wc_occupancy
+        from: "off"
+        to: "on"
+        for:
+          hours: 0
+          minutes: 3
+          seconds: 0
+    condition: []
+    action:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.airwick_must_spray
+    mode: single
+  - alias: BATHROMM No movement activate Airwick
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.athom_presence_wc_occupancy
+        from: "on"
+        to: "off"
+    condition:
+      - condition: state
+        entity_id: input_boolean.airwick_must_spray
+        state: "on"
+    action:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.airwick_must_spray
+      - service: button.press
+        data: {}
+        target:
+        entity_id: button.airwick_spray
+    mode: single
