@@ -1,0 +1,48 @@
+esphome:
+   name: "airwick"
+   platform: ESP8266
+   board: d1_mini
+
+wifi:
+   ssid: "XXXX"
+   password: "YYYY"
+
+api:
+   reboot_timeout: 0s
+
+ota:
+
+web_server:
+logger:
+
+mqtt:
+  broker: 192.168.28.50
+  username: user
+  password: password
+  id: mqtt_client
+  discovery: false
+  reboot_timeout: 0s
+
+switch:
+  - platform: gpio
+    pin: D3
+    inverted: yes
+    name: "RelayButton"
+    id: relaybutton
+  - platform: restart
+    name: "Airwick Restart"
+    icon: "mdi:restart"
+
+button:    
+  - platform: template
+    name: "Airwick Spray"
+    icon: "mdi:spray"
+    on_press:
+      - switch.turn_on: relaybutton
+      - delay: 500ms
+      - switch.turn_off: relaybutton
+
+binary_sensor:
+  - platform: status
+    name: "Airwick Status"
+    icon: "mdi:information"
