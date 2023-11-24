@@ -1,4 +1,4 @@
-# Airwick-ESPHome smart air refresher with ESPHome
+# Airwick ESPHome Smart Air Refresher
 Turning dumb Airwick air refresher to a smart one using ESPHome
 
 ## Parts needed:
